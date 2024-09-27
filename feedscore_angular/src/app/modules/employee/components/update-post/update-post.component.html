@@ -1,0 +1,34 @@
+<div class="container">
+    <!-- Post Task Form -->
+    <div style="margin-top: 8vh;">
+        <h2>Update Post</h2>
+        <form [formGroup]="taskForm">
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Title</mat-label>
+                <input matInput type="text" placeholder="Title" formControlName="title" />
+                <mat-error *ngIf="taskForm.get('title')?.hasError('required')">This Input Is Required!</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Description" formControlName="description"></textarea>
+                <mat-error *ngIf="taskForm.get('description')?.hasError('required')">This Input Is Required!</mat-error>
+            </mat-form-field>
+            <div *ngIf="existingImage" class="image-preview">
+                <div class="profile-badge">
+                    <img [src]="existingImage" alt="Existing Image" class="profile" />
+                </div>
+            </div>
+            <div>
+                <div class="profile-badge">
+                    <label for="upload_profile_image" class="upload-label" *ngIf="selectedFile">
+                        <img class="profile" [src]="imagePreview" alt="profile" />
+                    </label>
+                    <input type="file" nz-button nzType="primary" id="upload_profile_image" accept="image/x-png, image/gif, image/jpeg" (change)="onFileSelected($event)" />
+                </div>
+            </div>
+            <br>
+            <button mat-raised-button color="primary" type="submit" [disabled]="taskForm.invalid" (click)="updatePost()">Update Post</button>
+        </form>
+    </div>
+</div>

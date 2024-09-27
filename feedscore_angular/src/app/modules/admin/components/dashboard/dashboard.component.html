@@ -1,0 +1,87 @@
+<form [formGroup]="searchProductForm" class="search-form" (submit)="submitForm()">
+    <mat-form-field appearance="outline" class="search-input">
+        <mat-label>Enter keyword to search</mat-label>
+        <input matInput formControlName="title">
+        <button mat-button matSuffix color="primary" [disabled]="searchProductForm.invalid">
+            <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
+</form>
+
+<div class="task-list">
+    <mat-card class="task-card" *ngFor="let post of listOfPosts">
+        <div class="task-details">
+            <div style="    display: flex;
+            justify-content: space-between;">
+                <h2 class="task-name">{{ post.title }}</h2>
+                <div *ngIf="post.userId === loggedInUserId || loggedInUserId==1">
+                    <a *ngIf="post.userId === loggedInUserId" mat-icon-button color=" primary " class="update-button " [routerLink]=" '/employee/post/' + post.id + '/edit' ">
+                        <mat-icon>edit</mat-icon>
+                    </a>
+                    <button mat-icon-button color="warn " class="delete-button " (click)="deletePost(post.id) ">
+<mat-icon>delete</mat-icon>
+</button>
+                </div>
+            </div>
+            <p class=" task-description "><i>{{ post.description }}</i></p>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; " *ngIf="post.image && !post.image.includes( 'base64,null') ">
+            <img class="profile " style="height: 130px; width: 200px; border-radius: 10px; " [src]="post.image " alt="profile " />
+
+        </div>
+        <div class="task-actions ">
+            <button mat-button (click)="likePost(post) " [ngClass]="{ 'liked': post.liked} ">
+                <mat-icon>thumb_up</mat-icon>
+                <span style="color: black; font-weight: 500; ">{{ post.likeCount }}</span>
+            </button>
+            <button mat-button (click)="commentOnPost(post)">
+                <mat-icon>chat_bubble</mat-icon>
+                <span style="color: black; font-weight: 500;">Comment</span>
+              </button>
+            <div class="rating ">
+                <ng-container *ngFor="let star of [1, 2, 3, 4, 5] ">
+                    <mat-icon (click)="ratePost(post, star) " [ngClass]="{ 'rated': post.rating>= star, 'unrated': post.rating
+                    < star} ">
+                        star
+                    </mat-icon>
+                </ng-container> <span style="color: black; font-weight: 500; ">&nbsp;Rate</span>
+            </div>
+            <div><b style="color: black; font-weight: 500; ">Score:</b> {{post.avgRating}}</div>
+            <div style="width:100%">
+                <mat-card *ngIf="activeCommentPostId === post.id" style="box-shadow: none;" class="comment-card">
+                    <mat-card-content style="padding-bottom: 0;">
+                        <div>
+                            <form [formGroup]="commentForm">
+                                <mat-form-field style="width:80%" appearance="outline">
+                                    <mat-label>Content</mat-label>
+                                    <textarea matInput formControlName="content"></textarea>
+                                </mat-form-field>
+                                <button mat-raised-button color="primary" style="float: right;" [disabled]="!commentForm.valid" (click)="publishComment(post.id)">Comment</button>
+                            </form>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div *ngIf="activeCommentPostId === post.id" style="width:100%">
+                <h4 *ngIf="comments.length>0" style="margin-left: 15px;margin-bottom: 0;">Comments</h4>
+                <mat-card *ngFor="let comment of comments">
+                    <mat-card-content>
+                        <div class="comment-header">
+                            <span>{{ comment.postedBy }}</span>
+                            <span class="comment-time">{{ comment.createdAt | date: 'medium' }}</span>
+                        </div>
+                        <div class="comment-content"><i>{{ comment.content }}</i></div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+
+    </mat-card>
+</div>
+<!-- <footer class="footer ">
+    <div class="footer-content ">
+        <button mat-fab color="primary " (click)="toggleForm() ">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+</footer> -->

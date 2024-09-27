@@ -1,0 +1,62 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    position: fixed;
+    z-index: 1000;
+    height: 8vh;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 16px;
+    position: fixed;
+}
+
+.spacer {
+    flex: 1;
+}
+
+button {
+    color: white;
+    //text-transform: uppercase;
+    margin-left: 8px;
+}
+
+.mat-mdc-menu-panel {
+    overflow-x: hidden !important;
+    /* Disable horizontal scrolling */
+    overflow-y: auto;
+    /* Enable vertical scrolling if needed */
+}
+
+body {
+    overflow-x: hidden;
+}
+
+button.active {
+    font-weight: 600;
+}
+
+.custom-toolbar {
+    background-color: #ff0000;
+}
+
+button[mat-fab] {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    font-size: 16px;
+}
+
+.custom-fab {
+    background-color: white;
+    color: blue;
+}
+
+.custom-icon {
+    color: blue;
+}

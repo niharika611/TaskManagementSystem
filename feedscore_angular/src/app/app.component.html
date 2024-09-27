@@ -1,0 +1,69 @@
+<div *ngIf="!isAdminLoggedIn && !isEmployeeLoggedIn">
+    <mat-toolbar color="primary" class="navbar">
+        <!-- <span class="navbar-brand">Feed Score</span> -->
+        <span class="spacer"></span>
+        <button mat-button routerLink="/signup" routerLinkActive="active">Register</button>
+        <button mat-button routerLink="/login" routerLinkActive="active">Login</button>
+    </mat-toolbar>
+</div>
+
+<div *ngIf="isAdminLoggedIn">
+    <mat-toolbar color="primary" class="navbar">
+        <div style="display: flex; align-items: flex-end;">
+            <button style="margin-top: 1vh;" mat-fab class="custom-fab" (click)="toggleForm()">
+                <mat-icon class="custom-icon">edit</mat-icon>
+              </button>
+            <span style="font-size: 16px;"> &nbsp;CREATE POST</span>
+        </div>
+        <button style="font-size: 16px;" mat-button routerLink="/admin/dashboard" routerLinkActive="active">DASHBOARD</button>
+        <div style="display: flex; align-items: center; color: black; position: relative;">
+            <button mat-icon-button (click)="toggleNotifications()" aria-label="Notifications">
+                <mat-icon style="color: white;">notifications</mat-icon>
+                <span *ngIf="notifications.length > 0" matBadge="{{notifications.length}}" matBadgeColor="warn" matBadgePosition="above after"></span>
+            </button>
+            <div *ngIf="showNotifications" class="notification-dropdown" style="position: absolute; top: 40px; right: 0; width: 25vw; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000; overflow-x: hidden;">
+                <ng-container *ngIf="notifications.length > 0; else noNotifications">
+                    <div style="padding: 5px;" *ngFor="let notification of notifications">
+                        <i style="color: black; font-weight: normal; font-size: 16px;">{{ notification.message.toLowerCase() }}</i>
+                    </div>
+                </ng-container>
+                <ng-template #noNotifications>
+                    <div style="padding: 5px; color: black; font-weight: normal; font-size: 16px;">No new notifications</div>
+                </ng-template>
+            </div>
+            <button style="font-size: 16px;" mat-button (click)="logOut()" routerLinkActive="active">LOGOUT</button>
+        </div>
+    </mat-toolbar>
+</div>
+
+<div *ngIf="isEmployeeLoggedIn">
+    <mat-toolbar color="primary" class="navbar">
+        <div style="display: flex; align-items: flex-end;">
+            <button style="margin-top: 1vh;" mat-fab class="custom-fab" (click)="toggleForm()">
+                <mat-icon class="custom-icon">edit</mat-icon>
+              </button>
+            <span style="font-size: 16px;"> &nbsp;CREATE POST</span>
+        </div>
+        <button style="font-size: 16px;" mat-button routerLink="/employee/dashboard" routerLinkActive="active">DASHBOARD</button>
+        <div style="display: flex; align-items: center; color: black; position: relative;">
+            <button mat-icon-button (click)="toggleNotifications()" aria-label="Notifications">
+                <mat-icon style="color: white;">notifications</mat-icon>
+                <span *ngIf="notifications.length > 0" matBadge="{{notifications.length}}" matBadgeColor="warn" matBadgePosition="above after"></span>
+            </button>
+            <div *ngIf="showNotifications" class="notification-dropdown" style="position: absolute; top: 40px; right: 0; width: 25vw; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000; overflow-x: hidden;">
+                <ng-container *ngIf="notifications.length > 0; else noNotifications">
+                    <div style="padding: 5px;" *ngFor="let notification of notifications">
+                        <i style="color: black; font-weight: normal; font-size: 16px;">{{ notification.message.toLowerCase() }}</i>
+                    </div>
+                </ng-container>
+                <ng-template #noNotifications>
+                    <div style="padding: 5px; color: black; font-weight: normal; font-size: 16px;">No new notifications</div>
+                </ng-template>
+            </div>
+            <button style="font-size: 16px;" mat-button (click)="logOut()" routerLinkActive="active">LOGOUT</button>
+        </div>
+
+    </mat-toolbar>
+</div>
+
+<router-outlet></router-outlet>
